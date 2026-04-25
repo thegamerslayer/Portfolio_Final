@@ -21,18 +21,19 @@
         }
 
         :root {
-            --cream: #f5f0e8;
-            --yellow: #ffd60a;
-            --black: #0d0d0d;
+            --cream: #ffffff;
+            --yellow: #FDE68A;
+            --black: #111827;
             --white: #ffffff;
-            --pink: #ff6b9d;
-            --teal: #00c2a8;
-            --orange: #ff6b2b;
-            --purple: #7c4dff;
-            --border: 3px solid var(--black);
-            --shadow: 5px 5px 0px var(--black);
-            --shadow-lg: 8px 8px 0px var(--black);
-            --shadow-sm: 3px 3px 0px var(--black);
+            --pink: #FDA4AF;
+            --teal: #6EE7B7;
+            --orange: #FFEDD5;
+            --purple: #C7D2FE;
+            --accent: #6366F1;
+            --border: 2px solid var(--black);
+            --shadow: 4px 4px 0px var(--black);
+            --shadow-lg: 6px 6px 0px var(--black);
+            --shadow-sm: 2px 2px 0px var(--black);
         }
 
         html,
@@ -52,13 +53,17 @@
             top: 0;
             left: 0;
             z-index: 9999;
-            width: 10px;
-            height: 10px;
-            background: var(--black);
-            border-radius: 50%;
+            width: 24px;
+            height: 24px;
             pointer-events: none;
-            transform: translate(-50%, -50%);
-            transition: transform .08s, width .2s, height .2s, background .2s;
+            transform: translate(-2px, -2px);
+            transition: transform .05s ease-out;
+        }
+
+        #cur svg {
+            fill: var(--teal);
+            stroke: var(--black);
+            stroke-width: 2px;
         }
 
         #cur-r {
@@ -66,13 +71,23 @@
             top: 0;
             left: 0;
             z-index: 9998;
-            width: 36px;
-            height: 36px;
-            border: 2px solid rgba(13, 13, 13, .5);
-            border-radius: 50%;
+            height: 34px;
+            background: var(--purple);
+            border: var(--border);
+            border-radius: 40px;
             pointer-events: none;
-            transform: translate(-50%, -50%);
-            transition: width .18s ease, height .18s ease, border-color .2s;
+            padding: 0 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--black);
+            white-space: nowrap;
+            box-shadow: var(--shadow-sm);
+            transform: translate(12px, 12px);
+            transition: height .18s ease, transform .2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         body:has(a:hover) #cur {
@@ -88,15 +103,74 @@
             border-color: var(--black)
         }
 
-        /* ── BG PATTERN ── */
+        /* ── BG GRID ── */
         body::before {
             content: '';
             position: fixed;
             inset: 0;
             z-index: 0;
-            background-image:
-                radial-gradient(circle, rgba(13, 13, 13, .06) 1px, transparent 1px);
-            background-size: 28px 28px;
+            background-color: var(--cream);
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.03) 0%, transparent 60%),
+                linear-gradient(rgba(17, 24, 39, 0.14) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(17, 24, 39, 0.14) 1px, transparent 1px);
+            background-size: 100% 100%, 50px 50px, 50px 50px;
+            pointer-events: none;
+        }
+
+        .bg-word {
+            position: fixed;
+            font-size: 15rem;
+            font-weight: 800;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(17, 24, 39, 0.06);
+            z-index: 0;
+            pointer-events: none;
+            white-space: nowrap;
+            font-family: inherit;
+            text-transform: uppercase;
+        }
+        #bw1 { top: 10%; left: -5%; transform: rotate(-5deg); }
+        #bw2 { bottom: 5%; right: -5%; transform: rotate(3deg); }
+
+        .doodle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.1));
+        }
+        .doodle path {
+            stroke-width: 3px;
+            stroke-dasharray: 6 6;
+            stroke-linecap: round;
+        }
+
+        .pill-float {
+            position: absolute;
+            padding: 8px 18px;
+            background: var(--pink);
+            border: var(--border);
+            border-radius: 40px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            z-index: 2;
+            transform: rotate(-5deg);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-10px) rotate(-2deg); }
+        }
+
+        .scribble {
+            position: absolute;
+            z-index: -1;
             pointer-events: none;
         }
 
@@ -421,7 +495,7 @@
 
         .tval {
             font-weight: 700;
-            color: var(--orange)
+            color: var(--accent)
         }
 
         .blink {
@@ -557,7 +631,7 @@
         /* ═══ ABOUT ═══ */
         #about {
             gap: 44px;
-            align-items: flex-start
+            align-items: center
         }
 
         .ab-l {
@@ -721,8 +795,8 @@
             font-size: 10px;
             letter-spacing: .5px;
             padding: 4px 11px;
-            border: 2px solid var(--black);
-            background: var(--cream);
+            border-radius: 40px;
+            background: var(--white);
             color: var(--black);
             transition: all .15s;
             cursor: default;
@@ -816,7 +890,8 @@
             background: var(--white);
             border: var(--border);
             box-shadow: var(--shadow);
-            padding: 16px 15px;
+            border-radius: 24px;
+            padding: 24px 20px;
             position: relative;
             transition: transform .18s, box-shadow .18s;
             cursor: pointer;
@@ -917,7 +992,6 @@
         .tli {
             display: grid;
             grid-template-columns: 150px 36px 1fr;
-            align-items: start;
             opacity: 0;
             transform: translateX(-20px);
             transition: opacity .4s, transform .4s;
@@ -944,7 +1018,24 @@
         .tl-lw {
             display: flex;
             flex-direction: column;
-            align-items: center
+            align-items: center;
+            position: relative;
+        }
+
+        .tli:not(:last-child) .tl-lw::after {
+            content: '';
+            position: absolute;
+            top: 20px; /* Start below the dot */
+            bottom: -6px; /* Reaches exactly into the next row's dot margin */
+            left: 50%;
+            width: 0;
+            border-left: 3px dashed var(--black);
+            transform: translateX(-50%);
+            z-index: -1;
+        }
+
+        .tl-vl {
+            display: none; /* Component replaced by pseudo-element */
         }
 
         .tl-dot {
@@ -954,17 +1045,8 @@
             border: var(--border);
             flex-shrink: 0;
             margin-top: 2px;
-        }
-
-        .tl-vl {
-            width: 3px;
-            flex: 1;
-            min-height: 46px;
-            background: var(--black)
-        }
-
-        .tli:last-child .tl-vl {
-            display: none
+            position: relative;
+            z-index: 2;
         }
 
         .tl-cn {
@@ -1202,20 +1284,110 @@
                 transform: translateY(4px)
             }
         }
+        /* ── RESPONSIVE MEDIA QUERIES ── */
+        @media (max-width: 1024px) {
+            .p-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            .bg-word { font-size: 10rem; }
+        }
+
+        @media (max-width: 768px) {
+            body { display: block; overflow-x: hidden; }
+
+            /* Hide custom cursor on mobile touch */
+            @media (hover: none) and (pointer: coarse) {
+                #cur, #cur-r { display: none !important; }
+                * { cursor: auto !important; }
+            }
+
+            #side {
+                width: 100%;
+                height: auto;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 100;
+                padding: 12px 20px;
+                border-right: none;
+                border-bottom: var(--border);
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                background: var(--cream);
+            }
+
+            .s-top { margin-bottom: 0; }
+            .s-nav { flex-direction: row; gap: 8px; }
+            .nav-i { padding: 8px 12px; font-size: 11px; }
+
+            #main {
+                margin-left: 0;
+                padding-top: 70px; /* Spacer for fixed top nav */
+            }
+
+            .sec {
+                min-height: calc(100vh - 70px);
+                padding: 40px 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .h-name { font-size: 15vw; }
+            .h-role { font-size: 1.2rem; }
+            .bg-word { font-size: 5rem !important; -webkit-text-stroke: 1px rgba(17, 24, 39, 0.05); }
+
+            .ab-grid, .p-grid, .sk-grid { grid-template-columns: 1fr; gap: 20px; }
+            
+            .tli { grid-template-columns: 100px 30px 1fr; font-size: 13px; }
+            .tl-dt { font-size: 9px; padding-right: 10px; }
+
+            /* Fix Overlaps */
+            .pill-float { display: none !important; } /* Hide pills in lower sections on mobile */
+            #hero .pill-float { display: flex !important; scale: 0.8; } /* Keep hero pills but scale them down */
+            
+            #hero .pill-float.a1 { top: 12% !important; right: 5% !important; }
+            #hero .pill-float.a2 { bottom: 5% !important; left: 5% !important; }
+            
+            .h-name .scribble { display: none; } /* Remove doodle over name on mobile */
+
+            .doodle { display: none; } /* Hide heavy decos on mobile for clarity */
+            #hero .doodle.a1 { display: block; top: -10px !important; right: 20px !important; scale: 0.6; } 
+        }
+
+        @media (max-width: 480px) {
+            .h-cta { flex-direction: column; width: 100%; }
+            .btn { text-align: center; width: 100%; }
+            .h-soc { flex-wrap: wrap; justify-content: center; }
+            .s-nav { display: none; } /* Hide nav on ultra-small or replace with menu icon? */
+            /* Minimal fallback for mobile nav: only icons or text */
+        }
     </style>
 </head>
 
 <body>
 
     <!-- CURSOR -->
-    <div id="cur"></div>
-    <div id="cur-r"></div>
+    <div id="cur">
+        <svg viewBox="0 0 24 24">
+            <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z" />
+        </svg>
+    </div>
+    <div id="cur-r">Debanjan</div>
+
+    <!-- BACKGROUND TYPOGRAPHY -->
+    <div class="bg-word" id="bw1">Web Development</div>
+    <div class="bg-word" id="bw2">Data Analytics</div>
 
     <!-- DECO SHAPES -->
-    <div class="deco" id="d1"></div>
+    <div class="deco" id="d1" style="border-radius:12px; clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"></div>
     <div class="deco" id="d2"></div>
-    <div class="deco" id="d3"></div>
-    <div class="deco" id="d4"></div>
+    <div class="deco" id="d3" style="border-radius:15px; transform: skewX(-10deg);"></div>
+    <div class="deco" id="d4">
+        <svg viewBox="0 0 100 100" style="width:100%;height:100%;fill:var(--orange)">
+            <path d="M20,80 L80,20 L90,30 L30,90 Z" />
+            <path d="M80,20 L90,10 L100,20 L90,30 Z" fill="var(--black)" />
+        </svg>
+    </div>
 
     <div id="app">
         <!-- SIDENAV -->
@@ -1236,10 +1408,36 @@
 
             <!-- 0: HERO -->
             <section class="sec active" id="hero">
+                <!-- DOODLES -->
+                <svg class="doodle a1" style="top:10%; right:15%; width:120px; height:120px;" viewBox="0 0 100 100">
+                    <path d="M20,20 Q50,0 60,40 T40,80" fill="none" stroke="var(--black)" stroke-width="2" stroke-dasharray="4" />
+                    <path d="M35,70 L40,80 L50,75" fill="none" stroke="var(--black)" stroke-width="2" />
+                </svg>
+                <div class="pill-float a1" style="top:18%; right:8%; background:var(--teal)">
+                    <span>✌️</span> Full-Stack Dev
+                </div>
+                <div class="pill-float a2" style="bottom:22%; left:40%; background:var(--pink); transform:rotate(5deg);">
+                    <span>🎨</span> Creative Analytics
+                </div>
+                <!-- MORE DOODLES: Pencile & ZigZag -->
+                <svg class="doodle a1" style="bottom:10%; left:12%; width:60px; height:60px; transform:rotate(-15deg)" viewBox="0 0 24 24">
+                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" fill="var(--yellow)" stroke="var(--black)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <svg class="doodle a2" style="top:30%; right:25%; width:80px; height:80px; transform:rotate(-10deg)" viewBox="0 0 100 100">
+                    <path d="M10,50 L25,20 L40,80 L55,20 L70,80 L85,20" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <svg class="doodle a1" style="bottom:5%; right:35%; width:60px; height:60px; transform:rotate(15deg)" viewBox="0 0 100 100">
+                    <path d="M10,50 L25,20 L40,80 L55,20 L70,80 L85,20" fill="none" stroke="var(--pink)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                
                 <div class="h-ey a1">✦ BCA Student · Fresher · Open to Opportunities</div>
                 <h1 class="h-name a2">
                     Debanjan
-                    <span class="wave">Nag.</span>
+                    <span class="wave">Nag.
+                        <svg class="scribble" style="bottom:-10px;left:0;width:100%;height:20px" viewBox="0 0 200 20">
+                            <path d="M5,15 Q50,5 100,15 T195,10" fill="none" stroke="var(--black)" stroke-width="3" />
+                        </svg>
+                    </span>
                 </h1>
                 <div class="h-role a3">
                     &gt;&nbsp;Aspiring&nbsp;<span class="tval" id="tval"></span><span class="blink">_</span>
@@ -1251,9 +1449,13 @@
                     <span class="badge gn">✦ Springer Published</span>
                     <span class="badge">Blockchain Research</span>
                 </div>
-                <div class="h-cta a5">
+                <div class="h-cta a5" style="position:relative">
                     <a class="btn btn-p" href="#" onclick="goTo(5);return false;">Get in touch →</a>
                     <a class="btn btn-g" href="#" onclick="goTo(3);return false;">View projects ↗</a>
+                    <!-- ACTION LINES -->
+                    <svg class="doodle" style="top:-15px; right:-10px; width:40px; height:40px;" viewBox="0 0 50 50">
+                        <path d="M10,10 L5,2 M15,8 L15,0 M20,12 L30,5" fill="none" stroke="var(--black)" stroke-width="2" stroke-linecap="round" />
+                    </svg>
                 </div>
                 <div class="h-soc a6">
                     <a class="soc-a" href="https://github.com/thegamerslayer" target="_blank">
@@ -1282,6 +1484,25 @@
 
             <!-- 1: ABOUT -->
             <section class="sec" id="about">
+                <!-- DOODLES -->
+                <svg class="doodle a1" style="top:5%; left:10%; width:80px; height:80px; transform:rotate(-45deg)" viewBox="0 0 100 100">
+                    <path d="M10,10 C40,40 10,80 80,80" fill="none" stroke="var(--black)" stroke-width="2" stroke-dasharray="3" />
+                </svg>
+                <div class="pill-float a1" style="top:12%; left:20%; background:var(--yellow); transform:rotate(8deg)">
+                    <span>🚀</span> Researcher
+                </div>
+                <!-- MORE DOODLES: Star shape & Pencil -->
+                <svg class="doodle a2" style="bottom:15%; right:8%; width:50px; height:50px;" viewBox="0 0 100 100">
+                    <path d="M50,0 L60,35 L95,50 L60,65 L50,100 L40,65 L5,50 L40,35 Z" fill="var(--teal)" stroke="var(--black)" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+                <svg class="doodle a1" style="top:45%; right:3%; width:45px; height:45px; transform:rotate(40deg)" viewBox="0 0 24 24">
+                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" fill="var(--pink)" stroke="var(--black)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <!-- ZIG ZAG DOODLE -->
+                <svg class="doodle a2" style="top:25%; left:5%; width:70px; height:70px; transform:rotate(80deg)" viewBox="0 0 100 100">
+                    <path d="M10,50 L25,20 L40,80 L55,20 L70,80 L85,20" fill="none" stroke="var(--yellow)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+
                 <div class="ab-l a1">
                     <div class="av-wrap">🎯</div>
                     <div class="ab-stats">
@@ -1313,7 +1534,7 @@
                     <div class="a6">
                         <div class="pub">📄 Published · Springer Nature · DEChain</div>
                         <div class="h-cta" style="margin-top:14px">
-                            <a class="btn btn-p" href="DebanjanNagUpdatedResume3__1_.pdf" download>⬇ Download Resume</a>
+                            <a class="btn btn-p" href="Debanjan_Nag_Resume (4).pdf" download>⬇ Download Resume</a>
                         </div>
                     </div>
                 </div>
@@ -1321,6 +1542,25 @@
 
             <!-- 2: SKILLS -->
             <section class="sec" id="skills">
+                <!-- DOODLES -->
+                <div class="pill-float a1" style="top:5%; right:10%; background:var(--teal)">
+                    <span>📊</span> SQL Expert
+                </div>
+                <div class="pill-float a2" style="bottom:10%; left:5%; background:var(--purple); transform:rotate(-8deg)">
+                    <span>🛠️</span> Node.js / React
+                </div>
+                <!-- MORE DOODLES: Scribble loops & Pencils -->
+                <svg class="doodle a1" style="top:25%; left:35%; width:80px; height:80px; transform:rotate(120deg)" viewBox="0 0 100 100">
+                    <path d="M10,90 Q40,40 90,10 M70,10 L90,10 L90,30" fill="none" stroke="var(--black)" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+                <svg class="doodle a2" style="bottom:20%; right:35%; width:40px; height:40px; transform:rotate(-20deg)" viewBox="0 0 24 24">
+                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" fill="var(--teal)" stroke="var(--black)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <!-- ZIG ZAG DOODLE -->
+                <svg class="doodle a1" style="bottom:40%; right:5%; width:90px; height:90px; transform:rotate(-45deg)" viewBox="0 0 100 100">
+                    <path d="M10,50 L25,20 L40,80 L55,20 L70,80 L85,20" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+
                 <div style="width:100%">
                     <div class="stag a1">// Tech Stack</div>
                     <h2 class="stitle a2" style="margin-bottom:14px">What I work with.</h2>
@@ -1332,8 +1572,8 @@
                                     <span class="pill hi">SQL</span><span class="pill hi">Tableau</span><span
                                         class="pill hi">Power BI</span><span class="pill hi">Excel</span><span
                                         class="pill gn">Python (Pandas)</span><span class="pill gn">NumPy</span><span
-                                        class="pill">Power Query</span><span class="pill">PostgreSQL</span><span
-                                        class="pill">EDA</span><span class="pill">KPI Design</span>
+                                        class="pill gn">Power Query</span><span class="pill gn">PostgreSQL</span><span
+                                        class="pill gn">EDA</span><span class="pill gn">KPI Design</span>
                                 </div>
                             </div>
                             <div class="sk-box">
@@ -1341,9 +1581,9 @@
                                 <div class="sk-pills">
                                     <span class="pill pu">JavaScript</span><span class="pill pu">Node.js</span><span
                                         class="pill pu">Express.js</span><span class="pill pu">React</span><span
-                                        class="pill">TypeScript</span><span class="pill">Java</span><span
-                                        class="pill">Spring</span><span class="pill">HTML/CSS</span><span
-                                        class="pill">REST APIs</span>
+                                        class="pill pu">TypeScript</span><span class="pill pu">Java</span><span
+                                        class="pill pu">Spring</span><span class="pill pu">HTML/CSS</span><span
+                                        class="pill pu">REST APIs</span>
                                 </div>
                             </div>
                         </div>
@@ -1401,6 +1641,21 @@
 
             <!-- 3: PROJECTS -->
             <section class="sec" id="projects">
+                <!-- DOODLES -->
+                <div class="pill-float a1" style="top:8%; right:15%; background:var(--pink)">
+                    <span>💻</span> 5 Selected Works
+                </div>
+                <svg class="doodle a2" style="top:50%; left:2%; width:60px; height:60px; transform:rotate(90deg)" viewBox="0 0 100 100">
+                    <path d="M10,10 Q50,0 90,50" fill="none" stroke="var(--black)" />
+                </svg>
+                <!-- MORE DOODLES: Loopy scribble & Star -->
+                <svg class="doodle a1" style="bottom:10%; left:20%; width:100px; height:100px;" viewBox="0 0 100 100">
+                    <path d="M20,80 C20,80 5,20 40,20 C70,20 80,60 50,80 C30,100 10,60 80,30" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+                <svg class="doodle a2" style="top:10%; right:30%; width:35px; height:35px;" viewBox="0 0 100 100">
+                    <path d="M50,0 L60,35 L95,50 L60,65 L50,100 L40,65 L5,50 L40,35 Z" fill="var(--yellow)" stroke="var(--black)" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+
                 <div style="width:100%">
                     <div class="stag a1">// Selected Projects</div>
                     <h2 class="stitle a2" style="margin-bottom:14px">Things I've built.</h2>
@@ -1437,26 +1692,15 @@
                         </div>
                         <div class="pjc">
                             <div class="pj-num">04</div>
-                            <div class="pj-type" style="color:#0f766e">▸ Development</div>
-                            <div class="pj-title">Subscription Tracker</div>
-                            <div class="pj-desc">Full-stack app tracking recurring services & renewals. Node.js +
-                                Express backend with JWT auth and scalable REST API architecture.</div>
-                            <div class="pj-tags"><span class="ptag">Node.js</span><span class="ptag">Express</span><span
-                                    class="ptag">JWT</span></div>
+                            <div class="pj-type" style="color:#c2410c">▸ Data Engineering / ML</div>
+                            <div class="pj-title">Universal Pipeline Framework</div>
+                            <div class="pj-desc">Modular, containerized Python framework for ML pipelines. Transforms raw data into model-ready formats with Docker & Jupyter integration.</div>
+                            <div class="pj-tags"><span class="ptag">Python</span><span class="ptag">Docker</span><span
+                                    class="ptag">Pandas</span><span class="ptag">ML</span></div>
                             <div class="pj-arr">↗</div>
                         </div>
                         <div class="pjc">
                             <div class="pj-num">05</div>
-                            <div class="pj-type" style="color:#7c4dff">▸ AI / Dev</div>
-                            <div class="pj-title">AI Email Reply Generator</div>
-                            <div class="pj-desc">Context-aware AI email reply system with modular architecture designed
-                                for easy extensibility and future AI-driven features.</div>
-                            <div class="pj-tags"><span class="ptag">AI</span><span class="ptag">Node.js</span><span
-                                    class="ptag">REST</span></div>
-                            <div class="pj-arr">↗</div>
-                        </div>
-                        <div class="pjc">
-                            <div class="pj-num">06</div>
                             <div class="pj-type" style="color:#b45309">★ Research · Published</div>
                             <div class="pj-title">DEChain — Evidence System</div>
                             <div class="pj-desc">Blockchain evidence system (Hyperledger Fabric). SHA-256 hashing, smart
@@ -1471,29 +1715,23 @@
 
             <!-- 4: EXPERIENCE -->
             <section class="sec" id="experience">
+                <!-- DOODLES -->
+                <div class="pill-float a1" style="bottom:15%; right:5%; background:var(--yellow); transform:rotate(4deg)">
+                    <span>🎓</span> BCA @ IEM
+                </div>
+                <svg class="doodle a2" style="top:20%; right:5%; width:40px; height:40px;" viewBox="0 0 50 50">
+                    <path d="M5,5 L45,45 M45,5 L5,45" fill="none" stroke="var(--black)" />
+                </svg>
+
                 <div style="width:100%">
                     <div class="stag a1">// Timeline</div>
                     <h2 class="stitle a2" style="margin-bottom:16px">Experience & Education.</h2>
                     <div class="tl a3" id="tl">
-                        <div class="tli">
-                            <div class="tl-dt">Sep 2024 –<br />Sep 2025</div>
-                            <div class="tl-lw">
-                                <div class="tl-dot"></div>
-                                <div class="tl-vl"></div>
-                            </div>
-                            <div class="tl-cn">
-                                <div class="tl-ti">Cybersecurity Research Intern</div>
-                                <div class="tl-co">CCoE · UEM, Kolkata</div>
-                                <div class="tl-de">Built DEChain using Hyperledger Fabric — smart contracts, role-based
-                                    access, SHA-256 hashing. Achieved 8–23ms transaction times. Co-authored and
-                                    published in Springer Nature indexed conference.</div>
-                            </div>
-                        </div>
+                        <!-- 1: BCA (TOP) -->
                         <div class="tli">
                             <div class="tl-dt">Jul 2023 –<br />Jul 2026</div>
                             <div class="tl-lw">
                                 <div class="tl-dot"></div>
-                                <div class="tl-vl"></div>
                             </div>
                             <div class="tl-cn">
                                 <div class="tl-ti">Bachelor of Computer Application (BCA)</div>
@@ -1502,32 +1740,36 @@
                                     and software engineering fundamentals.</div>
                             </div>
                         </div>
+
+                        <!-- 2: RESEARCH -->
                         <div class="tli">
-                            <div class="tl-dt">Certifications</div>
+                            <div class="tl-dt">Sep 2024 –<br />Sep 2025</div>
                             <div class="tl-lw">
                                 <div class="tl-dot"></div>
-                                <div class="tl-vl"></div>
                             </div>
                             <div class="tl-cn">
-                                <div class="tl-ti">Industry Certifications · Forage</div>
-                                <div class="tl-co">Virtual Job Simulations</div>
+                                <div class="tl-ti">Core Researcher and Intern · Blockchain & Security</div>
+                                <div class="tl-co">CCoE · UEM, Kolkata</div>
+                                <div class="tl-de">Leading research on DEChain using Hyperledger Fabric. Developed smart contracts, role-based
+                                    access, and SHA-256 integrations. Co-authored Springer Nature published research.</div>
+                            </div>
+                        </div>
+
+                        <!-- 3: INTERNSHIP & CERTS -->
+                        <div class="tli">
+                            <div class="tl-dt">Internship &<br />Certifications</div>
+                            <div class="tl-lw">
+                                <div class="tl-dot"></div>
+                            </div>
+                            <div class="tl-cn">
+                                <div class="tl-ti">Industry Certifications</div>
+                                <div class="tl-co">Forage</div>
+                                <div class="tl-de">Gained hands-on experience in Data Analytics and Client Strategy and completed 
+                                    virtual job simulations for Deloitte and Bank of America.</div>
                                 <div class="cert-row">
                                     <span class="cert">Deloitte · Tableau & Excel</span>
                                     <span class="cert">Bank of America · Client Strategy</span>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="tli">
-                            <div class="tl-dt">2023</div>
-                            <div class="tl-lw">
-                                <div class="tl-dot"></div>
-                                <div class="tl-vl"></div>
-                            </div>
-                            <div class="tl-cn">
-                                <div class="tl-ti">Higher Secondary — 79%</div>
-                                <div class="tl-co">Barasat MG Memorial H.S. · WBCHSE</div>
-                                <div class="tl-de">West Bengal Council of Higher Secondary Education, Barasat, West
-                                    Bengal.</div>
                             </div>
                         </div>
                     </div>
@@ -1536,6 +1778,21 @@
 
             <!-- 5: CONTACT -->
             <section class="sec" id="contact">
+                <!-- DOODLES -->
+                <div class="pill-float a1" style="top:10%; left:5%; background:var(--teal); transform:rotate(-12deg)">
+                    <span>🤝</span> Open for Work
+                </div>
+                <svg class="doodle a2" style="bottom:20%; right:8%; width:100px; height:60px;" viewBox="0 0 100 60">
+                    <path d="M10,10 C40,50 60,0 90,40" fill="none" stroke="var(--black)" stroke-dasharray="8 8" />
+                </svg>
+                <!-- MORE DOODLES: A nice big pencil & spiral -->
+                <svg class="doodle a1" style="top:30%; right:15%; width:60px; height:60px; transform:rotate(15deg)" viewBox="0 0 24 24">
+                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" fill="var(--orange)" stroke="var(--black)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <svg class="doodle a2" style="bottom:10%; left:12%; width:80px; height:80px; transform:rotate(-10deg)" viewBox="0 0 100 100">
+                   <path d="M50,10 C80,10 90,40 70,70 C50,90 20,80 15,50 C10,20 40,0 60,15" fill="none" stroke="var(--pink)" stroke-width="3" stroke-linecap="round" stroke-dasharray="8 8"/>
+                </svg>
+
                 <div class="stag a1">// Let's Talk</div>
                 <h2 class="ct-title a2">Let's connect,<br /><span class="ct-hi">build & grow.</span></h2>
                 <div class="ct-sub a3">Open to DA roles · Internships · Collaborations</div>
@@ -1565,7 +1822,7 @@
                         </div>
                     </a>
                 </div>
-                <a class="dl-btn a5" href="DebanjanNagUpdatedResume3__1_.pdf" download>
+                <a class="dl-btn a5" href="Debanjan_Nag_Resume (4).pdf" download>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                         <polyline points="7,10 12,15 17,10" />
@@ -1587,10 +1844,9 @@
         let mx = 0, my = 0, rx = 0, ry = 0;
         document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY });
         (function a() {
-            // dot snaps fast
             curEl.style.left = mx + 'px'; curEl.style.top = my + 'px';
-            // ring lags behind for that smooth trailing feel
-            rx += (mx - rx) * .10; ry += (my - ry) * .10;
+            // pill offset follows the arrow
+            rx += (mx - rx) * .15; ry += (my - ry) * .15;
             curR.style.left = rx + 'px'; curR.style.top = ry + 'px';
             requestAnimationFrame(a);
         })();
@@ -1619,6 +1875,7 @@
             dots[current].classList.remove('active'); dots[n].classList.add('active');
             pgnEl.textContent = String(n + 1).padStart(2, '0');
             current = n;
+            updateParallax(n);
             if (n === 2) setTimeout(() => document.querySelectorAll('.skb-f').forEach(b => b.style.width = b.dataset.p + '%'), 260);
             if (n === 4) document.querySelectorAll('.tli').forEach((t, i) => setTimeout(() => t.classList.add('vis'), i * 130));
             setTimeout(() => busy = false, 560);
@@ -1631,6 +1888,23 @@
         let ty0 = null;
         window.addEventListener('touchstart', e => { ty0 = e.touches[0].clientY }, { passive: true });
         window.addEventListener('touchend', e => { if (ty0 === null) return; const dy = ty0 - e.changedTouches[0].clientY; if (Math.abs(dy) > 40) { dy > 0 ? goTo(current + 1) : goTo(current - 1) } ty0 = null });
+
+        // PARALLAX
+        window.addEventListener('scroll', () => {
+            const y = window.scrollY;
+            document.querySelectorAll('.bg-word').forEach((w, i) => {
+                const speed = 0.2 + (i * 0.1);
+                w.style.transform = `translateY(${y * speed}px) rotate(${i === 0 ? -5 : 3}deg)`;
+            });
+        });
+        // Note: Since we use goTo() which is a simulated scroll, 
+        // we should call this in goTo as well.
+        function updateParallax(n) {
+            const bw1 = document.getElementById('bw1'), bw2 = document.getElementById('bw2');
+            bw1.style.transform = `translateY(${n * -100}px) rotate(-5deg)`;
+            bw2.style.transform = `translateY(${n * -150}px) rotate(3deg)`;
+        }
+
     </script>
 </body>
 
