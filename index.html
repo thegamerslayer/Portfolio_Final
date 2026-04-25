@@ -1286,12 +1286,15 @@
         }
         /* ── RESPONSIVE MEDIA QUERIES ── */
         @media (max-width: 1024px) {
-            .p-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            .pj-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
             .bg-word { font-size: 10rem; }
         }
 
         @media (max-width: 768px) {
-            body { display: block; overflow-x: hidden; }
+            body, html { overflow-x: hidden; }
+
+            /* Switch main app from grid to block for mobile */
+            #app { display: block; }
 
             /* Hide custom cursor on mobile touch */
             @media (hover: none) and (pointer: coarse) {
@@ -1299,59 +1302,98 @@
                 * { cursor: auto !important; }
             }
 
-            #side {
+            /* HIDE NAV COMPLETELY ON MOBILE */
+            #snav { display: none !important; }
+
+            /* Push main content to the top since nav is gone */
+            #sects {
                 width: 100%;
-                height: auto;
-                position: fixed;
-                top: 0;
-                left: 0;
-                z-index: 100;
-                padding: 12px 20px;
-                border-right: none;
-                border-bottom: var(--border);
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                background: var(--cream);
-            }
-
-            .s-top { margin-bottom: 0; }
-            .s-nav { flex-direction: row; gap: 8px; }
-            .nav-i { padding: 8px 12px; font-size: 11px; }
-
-            #main {
-                margin-left: 0;
-                padding-top: 70px; /* Spacer for fixed top nav */
+                padding-top: 0;
             }
 
             .sec {
-                min-height: calc(100vh - 70px);
-                padding: 40px 20px;
+                min-height: calc(100vh - 60px);
+                padding: 40px 20px 80px 20px; /* Added bottom padding to clear the 05/06 page indicator */
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
             }
 
+            #scht { display: none; } /* Hide Scroll/Keys prompt on mobile */
+            .deco { display: none !important; } /* Hide the heavy background shapes that cause overlaps */
+
             .h-name { font-size: 15vw; }
             .h-role { font-size: 1.2rem; }
             .bg-word { font-size: 5rem !important; -webkit-text-stroke: 1px rgba(17, 24, 39, 0.05); }
 
-            .ab-grid, .p-grid, .sk-grid { grid-template-columns: 1fr; gap: 20px; }
-            
-            .tli { grid-template-columns: 100px 30px 1fr; font-size: 13px; }
-            .tl-dt { font-size: 9px; padding-right: 10px; }
+            /* Internal Scroll Area for Projects Fitting */
+            .pj-grid { 
+                grid-template-columns: 1fr !important;
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 12px !important; 
+                max-height: 52vh !important; /* Locks project list to a scrollable window */
+                overflow-y: auto !important;
+                overflow-x: hidden !important;
+                padding: 10px 4px !important;
+                scroll-behavior: smooth;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior: contain !important; /* LOCKS scroll inside this box ONLY */
+                border: 2px dashed rgba(17, 24, 39, 0.1); /* Subtle visual hint for scroll area */
+            }
 
-            /* Fix Overlaps */
-            .pill-float { display: none !important; } /* Hide pills in lower sections on mobile */
-            #hero .pill-float { display: flex !important; scale: 0.8; } /* Keep hero pills but scale them down */
-            
-            #hero .pill-float.a1 { top: 12% !important; right: 5% !important; }
-            #hero .pill-float.a2 { bottom: 5% !important; left: 5% !important; }
-            
-            .h-name .scribble { display: none; } /* Remove doodle over name on mobile */
+            .pjc { 
+                min-width: 100% !important;
+                padding: 16px 14px !important; 
+                border-radius: 12px !important; 
+                margin-bottom: 0 !important;
+                border-top-width: 4px !important;
+                box-shadow: 2px 2px 0 var(--black) !important;
+                flex-shrink: 0 !important; /* Prevent cards from shrinking inside scroll area */
+            }
 
-            .doodle { display: none; } /* Hide heavy decos on mobile for clarity */
-            #hero .doodle.a1 { display: block; top: -10px !important; right: 20px !important; scale: 0.6; } 
+            .pj-num { font-size: 8px !important; padding: 2px 5px !important; }
+            .pj-type { font-size: 9px !important; margin-bottom: 2px !important; }
+            .pj-title { font-size: 1rem !important; margin: 4px 0 !important; }
+            .pj-desc { font-size: 11px !important; line-height: 1.4 !important; margin-bottom: 6px !important; }
+            .pj-tags { gap: 4px !important; }
+            .ptag { padding: 2px 6px !important; font-size: 8px !important; border-width: 1px !important; }
+            .pj-arr { font-size: 14px !important; bottom: 8px !important; right: 8px !important; }
+
+            .ab-grid, .sk-cols { 
+                grid-template-columns: 1fr !important; 
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 20px !important; 
+            }
+            
+            .tli { grid-template-columns: 85px 24px 1fr; font-size: 13px; }
+            .tl-dt { font-size: 9px; padding-right: 8px; }
+
+            /* Premium Project Card Refinements */
+            .pjc { 
+                padding: 30px 24px !important; 
+                border-radius: 16px !important; 
+                margin-bottom: 20px;
+                box-shadow: 4px 4px 0 var(--black) !important;
+            }
+            .pj-title { font-size: 1.3rem !important; margin: 10px 0; }
+            .pj-desc { font-size: 14px !important; line-height: 1.5; color: #333; }
+            .ptag { padding: 4px 10px !important; font-size: 10px !important; }
+
+            /* Fix Positioning of the Page Indicator */
+            #pgind {
+                bottom: 15px !important;
+                right: 15px !important;
+                left: auto !important;
+                width: auto !important;
+                transform: none !important;
+                font-size: 10px !important;
+                padding: 6px 12px !important;
+            }
+
+            /* Remove ALL overlaps to guarantee clean mobile UI */
+            .pill-float, .doodle, .scribble, .deco { display: none !important; } 
         }
 
         @media (max-width: 480px) {
@@ -1660,7 +1702,7 @@
                     <div class="stag a1">// Selected Projects</div>
                     <h2 class="stitle a2" style="margin-bottom:14px">Things I've built.</h2>
                     <div class="pj-grid a3">
-                        <div class="pjc">
+                        <div class="pjc" style="border-top: 6px solid #c2410c; background: linear-gradient(to bottom right, #fff, #fff7ed);">
                             <div class="pj-num">01</div>
                             <div class="pj-type" style="color:#c2410c">▸ Data Analytics</div>
                             <div class="pj-title">Financial Transactions Dashboard</div>
@@ -1670,7 +1712,7 @@
                                     class="ptag">Tableau</span></div>
                             <div class="pj-arr">↗</div>
                         </div>
-                        <div class="pjc">
+                        <div class="pjc" style="border-top: 6px solid #c2410c; background: linear-gradient(to bottom right, #fff, #fff7ed);">
                             <div class="pj-num">02</div>
                             <div class="pj-type" style="color:#c2410c">▸ Data Analytics</div>
                             <div class="pj-title">Blinkit Retail Sales Dashboard</div>
@@ -1680,7 +1722,7 @@
                                     class="ptag">Excel</span></div>
                             <div class="pj-arr">↗</div>
                         </div>
-                        <div class="pjc">
+                        <div class="pjc" style="border-top: 6px solid #0f766e; background: linear-gradient(to bottom right, #fff, #f0fdfa);">
                             <div class="pj-num">03</div>
                             <div class="pj-type" style="color:#0f766e">▸ Development</div>
                             <div class="pj-title">Omni-Ticket Platform</div>
@@ -1690,7 +1732,7 @@
                                     class="ptag">TypeScript</span><span class="ptag">Vite</span></div>
                             <div class="pj-arr">↗</div>
                         </div>
-                        <div class="pjc">
+                        <div class="pjc" style="border-top: 6px solid #ea580c; background: linear-gradient(to bottom right, #fff, #fff7ed);">
                             <div class="pj-num">04</div>
                             <div class="pj-type" style="color:#c2410c">▸ Data Engineering / ML</div>
                             <div class="pj-title">Universal Pipeline Framework</div>
@@ -1699,7 +1741,7 @@
                                     class="ptag">Pandas</span><span class="ptag">ML</span></div>
                             <div class="pj-arr">↗</div>
                         </div>
-                        <div class="pjc">
+                        <div class="pjc" style="border-top: 6px solid #b45309; background: linear-gradient(to bottom right, #fff, #fffbeb);">
                             <div class="pj-num">05</div>
                             <div class="pj-type" style="color:#b45309">★ Research · Published</div>
                             <div class="pj-title">DEChain — Evidence System</div>
