@@ -17,7 +17,8 @@
         *::after {
             margin: 0;
             padding: 0;
-            box-sizing: border-box
+            box-sizing: border-box;
+            cursor: none !important;
         }
 
         :root {
@@ -57,7 +58,7 @@
             height: 24px;
             pointer-events: none;
             transform: translate(-2px, -2px);
-            transition: transform .05s ease-out;
+            transition: transform .2s ease-out, opacity .2s ease-out;
         }
 
         #cur svg {
@@ -87,20 +88,12 @@
             white-space: nowrap;
             box-shadow: var(--shadow-sm);
             transform: translate(12px, 12px);
-            transition: height .18s ease, transform .2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        body:has(a:hover) #cur {
-            width: 14px;
-            height: 14px;
-            background: var(--yellow);
-            border: 2px solid var(--black)
+            transition: background .2s, box-shadow .2s, transform .2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         body:has(a:hover) #cur-r {
-            width: 52px;
-            height: 52px;
-            border-color: var(--black)
+            background: var(--yellow);
+            box-shadow: var(--shadow);
         }
 
         /* ── BG GRID ── */
@@ -286,7 +279,6 @@
             height: 10px;
             background: rgba(255, 255, 255, .25);
             border: 2px solid rgba(255, 255, 255, .4);
-            cursor: pointer;
             transition: all .18s;
             position: relative;
         }
@@ -364,7 +356,7 @@
             visibility: visible;
             transform: translateY(0);
             transition: opacity .45s ease, transform .45s ease, visibility 0s linear 0s;
-            pointer-events: all
+            pointer-events: auto
         }
 
         .sec.exit-up {
@@ -566,7 +558,6 @@
             text-transform: uppercase;
             font-weight: 700;
             border: var(--border);
-            cursor: pointer;
             text-decoration: none;
             transition: transform .15s, box-shadow .15s;
             box-shadow: var(--shadow);
@@ -614,6 +605,8 @@
             padding: 5px 12px;
             background: var(--white);
             box-shadow: var(--shadow-sm);
+            z-index: 5;
+            position: relative;
             transition: transform .15s, box-shadow .15s;
         }
 
@@ -799,7 +792,6 @@
             background: var(--white);
             color: var(--black);
             transition: all .15s;
-            cursor: default;
             font-weight: 500;
         }
 
@@ -1151,6 +1143,8 @@
             background: var(--white);
             border: var(--border);
             box-shadow: var(--shadow);
+            z-index: 5;
+            position: relative;
             text-decoration: none;
             color: var(--black);
             font-size: 14px;
@@ -1284,6 +1278,31 @@
                 transform: translateY(4px)
             }
         }
+
+        /* TOAST NOTIFICATION */
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--yellow);
+            color: var(--black);
+            padding: 12px 24px;
+            border: var(--border);
+            box-shadow: var(--shadow);
+            font-family: 'Space Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            z-index: 10000;
+            transition: transform .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
         /* ── RESPONSIVE MEDIA QUERIES ── */
         @media (max-width: 1024px) {
             .pj-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
@@ -1416,6 +1435,8 @@
     </div>
     <div id="cur-r">Debanjan</div>
 
+    <div id="toast">Email copied to clipboard! 📋</div>
+
     <!-- BACKGROUND TYPOGRAPHY -->
     <div class="bg-word" id="bw1">Web Development</div>
     <div class="bg-word" id="bw2">Data Analytics</div>
@@ -1507,14 +1528,14 @@
                         </svg>
                         GitHub
                     </a>
-                    <a class="soc-a" href="https://www.linkedin.com/in/debanjan-nag-9b465928" target="_blank">
+                    <a class="soc-a" href="https://www.linkedin.com/in/debanjan-nag-9b4659282" target="_blank">
                         <svg viewBox="0 0 24 24" fill="currentColor">
                             <path
                                 d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .77 0 1.72v20.56C0 23.23.8 24 1.77 24h20.45C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.22 0z" />
                         </svg>
                         LinkedIn
                     </a>
-                    <a class="soc-a" href="mailto:debanjannag143@gmail.com">
+                    <a class="soc-a" href="mailto:debanjannag143@gmail.com" onclick="copyEmail(event)">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                             <polyline points="22,6 12,13 2,6" />
@@ -1847,7 +1868,7 @@
                         <div class="ctc-in"><span>GitHub</span><span class="ctc-sub">github.com/thegamerslayer</span>
                         </div>
                     </a>
-                    <a class="ctc" href="https://www.linkedin.com/in/debanjan-nag-9b465928" target="_blank">
+                    <a class="ctc" href="https://www.linkedin.com/in/debanjan-nag-9b4659282" target="_blank">
                         <svg viewBox="0 0 24 24" fill="currentColor">
                             <path
                                 d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .77 0 1.72v20.56C0 23.23.8 24 1.77 24h20.45C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.22 0z" />
@@ -1855,7 +1876,7 @@
                         <div class="ctc-in"><span>LinkedIn</span><span class="ctc-sub">debanjan-nag-9b465928</span>
                         </div>
                     </a>
-                    <a class="ctc" href="mailto:debanjannag143@gmail.com">
+                    <a class="ctc" href="mailto:debanjannag143@gmail.com" onclick="copyEmail(event)">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                             <polyline points="22,6 12,13 2,6" />
@@ -1945,6 +1966,18 @@
             const bw1 = document.getElementById('bw1'), bw2 = document.getElementById('bw2');
             bw1.style.transform = `translateY(${n * -100}px) rotate(-5deg)`;
             bw2.style.transform = `translateY(${n * -150}px) rotate(3deg)`;
+        }
+
+        function copyEmail(e) {
+            e.preventDefault();
+            const email = 'debanjannag143@gmail.com';
+            navigator.clipboard.writeText(email).then(() => {
+                const t = document.getElementById('toast');
+                t.classList.add('show');
+                setTimeout(() => t.classList.remove('show'), 2500);
+            });
+            // Optional: still try alert if users want the app
+            console.log('Email copied: ' + email);
         }
 
     </script>
